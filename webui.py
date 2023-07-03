@@ -14,6 +14,8 @@ from typing import Iterable
 from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
+from fastapi.responses import HTMLResponse
+
 from packaging import version
 
 import logging
@@ -367,6 +369,12 @@ def stop_route(request):
     return Response("Stopping.")
 
 
+def login_route(request):
+    html_content = shared.html("login.html")
+
+    return HTMLResponse(content=html_content, status_code=200)
+
+
 def webui():
     launch_api = cmd_opts.api
     initialize()
@@ -406,6 +414,9 @@ def webui():
         )
         if cmd_opts.add_stop_route:
             app.add_route("/_stop", stop_route, methods=["POST"])
+
+
+        app.add_route("/login", login_route, methods=["GET"])
 
         # after initial launch, disable --autolaunch for subsequent restarts
         cmd_opts.autolaunch = False

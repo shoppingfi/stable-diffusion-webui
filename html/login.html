@@ -1,0 +1,145 @@
+<html>
+
+<head>
+    <title>Some HTML in here</title>
+</head>
+
+<style>
+    body {
+        background-color: #FFF9F6;
+    }
+
+    .login-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    .logo {
+        width: 230px;
+        margin-bottom: 67px;
+    }
+
+    .login-form-container {
+        width: 538px;
+        background: #FFFFFF;
+        border-radius: 29px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-top: 63px;
+        padding-bottom: 75px;
+    }
+
+    .welcome {
+        font-size: 18px;
+        color: #291409;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .input-tip {
+        font-size: 12px;
+        color: rgba(41, 20, 9, 0.60);
+        text-align: center;
+        margin-bottom: 33px;
+    }
+
+    .input-container {
+        width: 273px;
+        height: 32px;
+        background: #FFFFFF;
+        border: 1px solid #D9D9D9;
+        border-radius: 6px;
+        padding-left: 8px;
+        padding-right: 8px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        box-sizing: border-box;
+    }
+
+    .input-icon {
+        width: 16px;
+        height: 16px;
+        margin-right: 8px;
+    }
+
+    .login-input {
+        outline-style: none;
+        border: none;
+        line-height: 16px;
+        height: 22px;
+    }
+
+    .login-input::placeholder {
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.25);
+        line-height: 22px;
+    }
+
+    .login-btn {
+        width: 273px;
+        height: 32px;
+        background: #EE600F;
+        border-radius: 6px;
+        font-size: 14px;
+        color: #FFFFFF;
+        text-align: center;
+        line-height: 32px;
+        cursor: pointer;
+    }
+</style>
+
+<body>
+
+    <div class="login-container">
+        <img class="logo" src="https://sharerare.oss-cn-hangzhou.aliyuncs.com/sd/logo_black.png" />
+
+        <div class="login-form-container">
+            <span class="welcome">欢迎你</span>
+            <span class="input-tip">请输入以下信息，即可登录你的账号</span>
+
+
+            <div class="input-container" style="margin-bottom: 17px;">
+                <img class="input-icon" src="https://sharerare.oss-cn-hangzhou.aliyuncs.com/sd/avatar.png" />
+                <input placeholder="请输入账号" class="login-input" id="username" />
+            </div>
+
+            <div class="input-container" style="margin-bottom: 25px;">
+                <img class="input-icon" src="https://sharerare.oss-cn-hangzhou.aliyuncs.com/sd/lock.png" />
+                <input placeholder="请输入密码" class="login-input" id="password" />
+            </div>
+
+            <div class="login-btn" id="loginbtn">
+                登录
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    async function login() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const response = await fetch('https://192.168.2.64:8082/sys/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                username,
+                password
+            })
+        });
+        console.log('response', response)
+    }
+    const loginBtn = document.getElementById("loginbtn");
+    loginBtn.addEventListener("click", login);
+
+</script>
+
+</html>
