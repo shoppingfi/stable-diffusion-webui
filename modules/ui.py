@@ -1475,7 +1475,7 @@ def create_ui():
     with gr.Blocks(theme=shared.gradio_theme, analytics_enabled=False, title="Stable Diffusion") as demo:
 
         header = shared.html("header.html")
-        gr.HTML(footer, elem_id="header")
+        gr.HTML(header, elem_id="header")
 
         settings.add_quicksettings()
 
