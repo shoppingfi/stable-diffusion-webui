@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>Some HTML in here</title>
+    <title>真奇妙</title>
 </head>
 
 <style>
@@ -14,7 +14,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 100vh;
+        height: calc(100vh - 130px);
     }
 
     .logo {
@@ -94,8 +94,59 @@
     }
 </style>
 
-<body>
+<style>
+    .custom-footer-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #FFFFFF;
+    }
 
+    .custom-footer {
+        height: 130px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding-left: 10px;
+        padding-right: 10px;
+        width: 1200px;
+    }
+
+    .qrs {
+        display: flex;
+        flex: row;
+    }
+
+    .qr-container {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .qr-img {
+        width: 60px;
+        height: 60px;
+        margin-right: 20px;
+    }
+
+    .qr-desc {
+        padding-top: 4px;
+        padding-bottom: 4px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .copyright {
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+    }
+</style>
+
+
+
+<body style="margin: 0">
     <div class="login-container">
         <img class="logo" src="https://sharerare.oss-cn-hangzhou.aliyuncs.com/sd/logo_black.png" />
 
@@ -119,13 +170,48 @@
             </div>
         </div>
     </div>
+
+    <div class="custom-footer-container">
+        <div class="custom-footer">
+            <div class="qrs">
+                <div class="qr-container" style="margin-right: 60px">
+                    <img class="qr-img" src="https://sharerare.oss-cn-hangzhou.aliyuncs.com/sd/vxqr.jpeg" />
+                    <div class="qr-desc">
+                        <span>小红书扫一扫</span>
+                        <span>联系我们</span>
+                    </div>
+                </div>
+
+                <div class="qr-container">
+                    <img class="qr-img" src="https://sharerare.oss-cn-hangzhou.aliyuncs.com/sd/vxqr.jpeg" />
+                    <div class="qr-desc">
+                        <span>微信扫一扫</span>
+                        <span>联系我们</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <div>
+                    <span style="font-size: 13px;color: #6d6d6d">©2023</span>
+                    <span style="font-size: 12px;color: #6d6d6d">真奇妙</span>
+                </div>
+
+                <div>
+                    <span style="font-size: 12px;color: #6d6d6d">浙ICP备2023016465号</span>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
 </body>
 
 <script>
     async function login() {
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
-        const response = await fetch('http://zhenqimiao.cloud:8082/sys/auth/login', {
+        const response = await fetch('http://www.zhenqimiao.cloud:8082/sys/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
@@ -135,13 +221,13 @@
                 password
             })
         });
-        if (response.status === 200) {
-            window.location.replace('http://127.0.0.1:7860/')
+        const result = await response.json();
+        if (response.status === 200 && result?.data?.access_token) {
+            window.location.replace('http://127.0.0.1:8082/')
         }
     }
     const loginBtn = document.getElementById("loginbtn");
     loginBtn.addEventListener("click", login);
-
 </script>
 
 </html>

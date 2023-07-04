@@ -1472,7 +1472,11 @@ def create_ui():
     for _interface, label, _ifid in interfaces:
         shared.tab_names.append(label)
 
-    with gr.Blocks(theme=shared.gradio_theme, analytics_enabled=False, title="Stable Diffusion") as demo:
+    css = """
+        .tabs {min-height: calc(100vh - 380px) !important}
+        """
+
+    with gr.Blocks(theme=shared.gradio_theme, analytics_enabled=False, title="真奇妙", css=css) as demo:
 
         header = shared.html("header.html")
         gr.HTML(header, elem_id="header")
@@ -1507,12 +1511,18 @@ def create_ui():
         footer = shared.html("custom-footer.html")
         # footer = footer.format(versions=versions_html(), api_docs="/docs" if shared.cmd_opts.api else "https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/API")
         gr.HTML(footer, elem_id="custom-footer")
+        onload_scripts = """
+            async function queryUseTimes() {
+                const response = await fetch('http://www.zhenqimiao.cloud:8082/sys/user/getUseCount', {credentials: 'include'});
+                const result = response.json();
+            }
+        """
 
         settings.add_functionality(demo)
 
         update_image_cfg_scale_visibility = lambda: gr.update(visible=shared.sd_model and shared.sd_model.cond_stage_key == "edit")
         settings.text_settings.change(fn=update_image_cfg_scale_visibility, inputs=[], outputs=[image_cfg_scale])
-        demo.load(fn=update_image_cfg_scale_visibility, inputs=[], outputs=[image_cfg_scale])
+        demo.load(fn=update_image_cfg_scale_visibility, inputs=[], outputs=[image_cfg_scale], _js=onload_scripts)
 
         def modelmerger(*args):
             try:
