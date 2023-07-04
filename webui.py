@@ -374,7 +374,6 @@ def login_route(request):
 
     return HTMLResponse(content=html_content, status_code=200)
 
-
 def webui():
     launch_api = cmd_opts.api
     initialize()
