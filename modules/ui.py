@@ -1464,7 +1464,7 @@ def create_ui():
 
     interfaces += script_callbacks.ui_tabs_callback()
     # 默认隐藏 settings extensions
-    # interfaces += [(settings.interface, "Settings", "settings")]
+    interfaces += [(settings.interface, "Settings", "settings")]
 
     # extensions_interface = ui_extensions.create_ui()
     # interfaces += [(extensions_interface, "Extensions", "extensions")]
